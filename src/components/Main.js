@@ -11,22 +11,44 @@ imageDatas = (function genImageURL(imageDatasArr) {
     for (let i = 0,j = imageDatasArr.length; i< j; i++) {
         var singleImageData = imageDatasArr[i];
 
-        singleImageData.imgaeURL = require('../images/' + singleImageData.fileName);
+        singleImageData.imageURL = require('../images/' + singleImageData.fileName);
         imageDatasArr[i] = singleImageData;
     }
 
     return imageDatasArr;
 })(imageDatas)
 
+class ImgFigure extends React.Component {
+  render() {
+    return (
+      <figure>
+          <img src={this.props.data.imageURL}
+               alt={this.props.data.title} />
+          <figcaption>
+              <h2>{this.props.data.title}</h2>
+          </figcaption>
+      </figure>
+    )
+  }
+}
+
 class AppComponent extends React.Component {
   render() {
+
+    const controllerUnits = [];
+    const imgFigures = [];
+
+    imageDatas.forEach(function (val) {
+      imgFigures.push(<ImgFigure data={val} key={val.id}/>);
+    })
+
     return (
       <section className="stage">
           <section className="img-sec">
-
+              {imgFigures}
           </section>
           <section className="controller-nav">
-
+              {controllerUnits}
           </section>
       </section>
     );
